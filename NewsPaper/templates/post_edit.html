@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Post edit
+{% endblock title %}
+
+{% block content %}
+
+<h3>Редактирование новости/статьи:</h3>
+
+<form method="POST">
+ {% csrf_token %}
+ {{ form }}
+   <input class="btn btn-success" type="submit" value='Добавить изменения'>
+</form>
+
+{% endblock content %}

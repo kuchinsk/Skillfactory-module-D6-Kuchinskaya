@@ -1,0 +1,23 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+<h1>Свежие новости:</h1>
+
+{% for post in news %}
+    <h3 > {{ post.title|censor }} </h3>
+    <p> {{ post.textPost|censor|truncatewords:20}} </p>
+    <a href="/news/{{post.id}}">Читать далее</a>
+    <p> {{ post.author }} {{ post.timePost|date:'d.m.Y' }}
+        {% for c in post.category.values %}
+            <a href="{% url 'news:category' c.id %}">{{ c.category }}</a>
+        {% endfor %}
+    </p>
+    <a href="{% url 'news:post_edit' post.id %}">Редактировать </a><a href="{% url 'news:post_delete' post.id %}"> Удалить</a>
+{% endfor %}
+{% include 'paginator.html' %}
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+
+{% block content %}
+<h2>
+ Страница авторизованного пользователя {{request.user.username}}
+</h2>
+
+<div>
+ Здравствуйте,  {{user.username}}!
+<div>
+
+<a class="btn btn-primary" type="submit" href="/sign/logout/">
+ Выйти
+</a>
+ <a class="btn btn-primary" type="submit" href="/news">
+ Перейти к новостям
+</a>
+{% if is_not_author %}
+
+<a class="btn btn-primary" type="submit" href="{% url 'sign:upgrade' %}">
+ Хочу вступить в группу авторов проекта!
+</a>
+{% else %}
+<h3>
+ Вы в группе авторов!
+</h3>
+{% endif %}
+{% endblock content %}

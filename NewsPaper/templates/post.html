@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% block title %}
+News:
+{% endblock title %}
+
+{% block content %}
+<h3>{{ post.title|censor }}</h3>
+<p>{{ post.timePost }}</p>
+<p>{{ post.textPost|censor }}</p>
+<p> {{ post.author }} {{ post.timePost|date:'d.m.Y' }}
+    {% for c in post.category.values %}
+        <a href="{% url 'news:category' c.id %}">{{ c.category }}</a>
+    {% endfor %}
+</p>
+
+<a href="{% url 'news:post_edit' post.id %}">Редактировать </a><a href="{% url 'news:post_delete' post.id %}"> Удалить</a>
+{% endblock content %}

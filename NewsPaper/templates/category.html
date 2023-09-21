@@ -1,0 +1,28 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+{{ category }}
+{% endblock title %}
+
+{% block content %}
+
+<div class="subscribed">
+
+  {% if user not in subscribers %}
+    <p>Хотите получать свежие новости из раздела {{category}}?</p>
+        <form action="{% url 'news:subscribe' category.pk %}" method="Post">
+            {% csrf_token %}
+            <input type="submit" value="Подписаться"/>
+        </form>
+    {% else %}
+    <p>Вы больше не хотите получать свежие новости из раздела {{category}}?</p>
+        <form action="{% url 'news:unsubscribe' category.pk %}" method="Post">
+            {% csrf_token %}
+            <input type="submit" value="Отписаться"/>
+        </form>
+  {% endif %}
+
+
+</div>
+
+{% endblock content %}

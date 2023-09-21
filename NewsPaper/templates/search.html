@@ -1,0 +1,24 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+<h1>Поиск по новостям:</h1>
+
+<form class="form-label" method="GET">
+   {{ filter.form }} <hr>
+   <input class="btn btn-primary btn-lg" type="submit" value="Найти">
+</form>
+
+{% for post in filter.qs %}
+    <h3> {{ post.title|censor }} </h3>
+    <p> {{ post.textPost|censor|truncatewords:20}} </p>
+    <p> {{ post.author }} {{ post.timePost|date:'d.m.Y' }} </p>
+{% endfor %}
+
+{% include 'paginator.html' %}
+
+{% endblock content %}

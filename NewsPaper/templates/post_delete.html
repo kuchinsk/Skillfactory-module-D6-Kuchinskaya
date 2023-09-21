@@ -1,0 +1,23 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Post delete
+{% endblock title %}
+
+{% block content %}
+
+<h3>Вы уверены что хотите удалить эту нововсть?</h3>
+
+ <div class="card">
+     <h3> {{ post.title|censor }} </h3>
+     <p> {{ post.textPost|censor|truncatewords:20}} </p>
+     <p> {{ post.author }} {{ post.timePost|date:'d.m.Y' }}</p>
+ </div>
+
+<form method="POST">
+ {% csrf_token %}
+    <input class="btn btn-success" type="submit" value="Да, удалить">
+</form>
+
+{% endblock content %}

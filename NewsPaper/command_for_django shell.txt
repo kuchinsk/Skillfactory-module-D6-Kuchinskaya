@@ -1,0 +1,68 @@
+1. Создать двух пользователей (с помощью метода User.objects.create_user)
+user1= User.objects.create(username = 'Ivan', first_name = 'Ivanov')
+user2= User.objects.create(username = 'Nikolay', first_name = 'Nikolaev')
+
+2. Создать два объекта модели Author, связанные с пользователями
+Author.objects.create(authorUser = user1)
+Author.objects.create(authorUser = user2)
+
+a1 = Author.objects.get(authorUser = User.objects.get(username='Ivan'))
+a2 = Author.objects.get(authorUser = User.objects.get(username='Nikolay'))
+
+
+3. Добавить 4 категории в модель Category
+Category.objects.create(category = 'Weather')
+Category.objects.create(category = 'Ecology')
+Category.objects.create(category = 'Culture')
+Category.objects.create(category = 'Art')
+
+c1 = Category.objects.get(category = 'Weather')
+c2 = Category.objects.get(category = 'Ecology')
+c3 = Category.objects.get(category = 'Culture')
+c4 = Category.objects.get(category = 'Art')
+
+4. Добавить 2 статьи и 1 новость
+Post.objects.create(author = Author.objects.get(authorUser = User.objects.get(username = 'Ivan')), type = 'AR', title = 'О снежинках', textPost = 'Впервые снежинки как кристаллы строгой формы описал немецкий астроном Иоганн Кеплер в работе «О шестиугольных снежинках» (1611 г). В 1635 году формой снежинок заинтересовался французский философ, математик и естествоиспытатель Рене Декарт, написавший трактат «Опыт о метеорах». Декарт впервые нашел и описал достаточно редкую двенадцатиконечную снежинку. До сих пор неясно, при каких условиях она образуется. В 1665 году Роберт Гук увидел с помощью микроскопа и опубликовал множество рисунков снежинок самой разной формы. Вильсон Бентли (1865-1931) по прозвищу «Снежинка» был американским фермером и занимался фотографией снежных кристаллов. В 15 лет он получил в подарок микроскоп, через три года прикрепил к нему фотоаппарат и в 1885 году, после множества проб и ошибок получил первую удачную фотографию снежинки под микроскопом. Он занимался этим сорок шесть лет, сделав более 5000 уникальных снимков.  В 1898 году Бентли опубликовал свой полувековой труд о снежных кристаллах. Эта работа показала, что невозможно найти две абсолютно одинаковые снежинки - снежная мозаика может сложиться огромным числом способов. «Я обнаружил, что снежинки  –  это чудесное воплощение красоты, - писал Бентли, - и мне  показалось стыдным, что эту красоту  не увидят и не оценят другие. Каждый кристалл представлял великолепный узор, и ни один узор не повторялся дважды. Когда снежинка таяла, узор пропадал навсегда. Так, словно бесследно навсегда уходила красота».')
+Post.objects.create(author = Author.objects.get(authorUser = User.objects.get(username = 'Nikolay')), type = 'AR', title ='Погода и здоровье', textPost = 'Оказалось, что лучше всего мы чувствуем себя в ясный день, когда веет легкий ветерок (меньше 5 м/с), температура составляет 18-20°С, относительная влажность – 50-60%, атмосферное давление, например, в средней полосе колеблется от 744 до 752 мм рт. ст., а характер погоды устойчивый. Это и есть комфортная для нас климатическая норма.  Таких дней в Центральной России по пальцам можно пересчитать. Более того, каждые 5-6 сутки в течение года являются критическими с метеопатической точки зрения. Метеотропные реакции развиваются при перепаде температуры на 8-10° и давления – на 7-8 мм рт ст. за сутки, а также при сильном ветре (более 15 м/с).')
+Post.objects.create(author = Author.objects.get(authorUser = User.objects.get(username = 'Nikolay')), type = 'NW', title = 'Найдены уникальные росписи', textPost = 'Обнаруженный в Старой Донголе выдающийся образец христианского искусства содержит изображения с не встречавшейся прежде иконографией. Теперь этот памятник оказался под угрозой из-за вооруженного конфликта в Судане')
+
+p1 = Post.objects.get(title = 'О снежинках')
+p2 = Post.objects.get(title ='Погода и здоровье')
+p3 = Post.objects.get(title = 'Найдены уникальные росписи')
+
+5. Присвоить им категории (как минимум в одной статье/новости должно быть не меньше 2 категорий)
+p1.category.add(c1, c2)
+p2.category.add(c3, c4)
+p3.category.add(c3, c4)
+
+6. Создать как минимум 4 комментария к разным объектам модели Post (в каждом объекте должен быть как минимум один комментарий).
+Comment.objects.create(textComment = 'При падении снежных кристаллов с ними может случиться многое - частичное таяние, столкновения друг с другом и с каплями воды.', commentPost = p1, commentUser = User.objects.get(username = 'Nikolay'))
+Comment.objects.create(textComment = 'Поэтому наиболее часто встречаются нерегулярные кристаллы, не имеющие легко идентифицируемой формы.', commentPost = p1, commentUser = User.objects.get(username = 'Ivan'))
+Comment.objects.create(textComment = 'Человеческий организм хорошо приспособлен к влиянию окружающей среды и колебаниям ее параметров.', commentPost = p2, commentUser = User.objects.get(username = 'Ivan'))
+Comment.objects.create(textComment = 'Находка в Старой Донголе была сделана в рамках проекта «Городская метаморфоза населения средневековой африканской столицы»', commentPost = p3, commentUser = User.objects.get(username = 'Nikolay'))
+
+7. Применяя функции like() и dislike() к статьям/новостям и комментариям, скорректировать рейтинги этих объектов.
+Post.objects.get(pk = 1).like() # лайк поста ивана
+Post.objects.get(pk = 1).like() # лайк поста ивана
+Comment.objects.get(pk = 1).like() # Лайк  коментария николая к посту ивана
+Comment.objects.get(pk = 1).like() # Лайк  коментария николая к посту ивана
+Comment.objects.get(pk = 2).like() # Лайк  коментария ивана к посту ивана
+Comment.objects.get(pk = 3).like() # Лайк  коментария ивана к посту николая
+Comment.objects.get(pk = 4).like() # Лайк  коментария николая к посту николая
+Comment.objects.get(pk = 4).dislike() # дизайк  коментария николая к посту николая
+Post.objects.get(pk = 2).like() # лайк поста николая
+Post.objects.get(pk = 3).like() # лайк поста николая
+Post.objects.get(pk = 3).dislike() # дизлайк поста николая
+
+8. Обновить рейтинги пользователей.
+a1.update_rating()
+a2.update_rating()
+
+9. Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта)
+best_user = Author.objects.order_by('-ratingAuthor').first()
+print('Наибольший рейтинг у пользователя: ', best_user.authorUser.username, 'его рейтинг: ', best_user.ratingAuthor)
+
+10. Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье.
+best_post = Post.objects.filter(type = 'AR').order_by('-ratingPost').first()
+print('Лучшая статья добавлена: ', best_post.timePost, '\nИмя автора лучей статьи: ', best_post.author.authorUser.username,
+'\nРейтинг статьи:', best_post.ratingPost, '\nЗаголовок:', best_post.title, '\nПревью:', best_post.preview(),)
